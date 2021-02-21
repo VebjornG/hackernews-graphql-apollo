@@ -21,7 +21,8 @@ You will also see any lint errors in the console.
 
 Runs the server. This command is run in the `server/src` folder.\
 If you make changes to the schema or `index.js` in this folder\
-you will have to restart the server to see the changes in `Playground`.
+you will have to restart the server to see the changes in `Playground`\
+which is accessed by opening [http://localhost:4000](http://localhost:4000) in your browser.
 
 ### `npm test`
 
