@@ -1,5 +1,4 @@
-# The typeDefs constant defines the GraphQL schema. 
-# Here, it defines a simple Query type with one field called info. This field has the type String!. 
+# The schema defines a simple Query type and a Mutation. 
 # The exclamation mark in the type definition means that this field is required and can never be null.
 
 type Query {
