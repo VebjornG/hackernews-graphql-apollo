@@ -19,8 +19,8 @@ You will also see any lint errors in the console.
 
 ### `node index.js`
 
-Runs the server. This command is run in the `server/src` folder.
-If you make changes to the schema or `index.js` in this folder
+Runs the server. This command is run in the `server/src` folder.\
+If you make changes to the schema or `index.js` in this folder\
 you will have to restart the server to see the changes in `Playground`.
 
 ### `npm test`
