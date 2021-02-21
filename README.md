@@ -1,6 +1,7 @@
 # Hackernews Clone
 
 Fullstack app made with React, GraphQL and Apollo. The final product will be showcased once finished.
+Read more about Apollo [here](https://studio.apollographql.com/).
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
@@ -15,6 +16,12 @@ Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
 
 The page will reload if you make edits.\
 You will also see any lint errors in the console.
+
+### `node index.js`
+
+Runs the server. This command is run in the `server/src` folder.
+If you make changes to the schema or `index.js` in this folder
+you will have to restart the server to see the changes in `Playground`.
 
 ### `npm test`
 
