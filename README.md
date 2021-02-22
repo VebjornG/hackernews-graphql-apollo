@@ -1,7 +1,6 @@
 # Hackernews Clone
 
-Fullstack app made with React, GraphQL, Apollo and Prisma. The final product will be showcased once finished.
-Read more about [Apollo](https://studio.apollographql.com/) and [Prisma](https://www.prisma.io/react-server-components).
+Fullstack app made with React, [GraphQL](https://graphql.org/), [Apollo](https://studio.apollographql.com/) and [Prisma](https://www.prisma.io/react-server-components). The final product will be showcased once finished.
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
 
