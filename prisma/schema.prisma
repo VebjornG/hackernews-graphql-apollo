@@ -4,8 +4,8 @@
 
 // Data source: Tells Prisma you’ll be using SQLite for your database connection.
 datasource db {
-  provider = "postgresql"
-  url      = env("DATABASE_URL")
+  provider = "sqlite"
+  url      = "file:./dev.db"
 }
 
 
@@ -23,4 +23,17 @@ model Link {
   createdAt   DateTime  @default(now())
   description String
   url         String
+  // @relation is required for every relation field in a Prisma Schema.
+  // We're adding an extra field to store the id of the User who posts a Link, 
+  // and then telling Prisma that postedById will be equal to the id field in the User table.
+  postedBy    User?     @relation(fields: [postedById], references: [id])  
+  postedById  Int? 
+}
+
+model User {
+  id          Int       @id @default(autoincrement())
+  name        String
+  email       String    @unique
+  password    String
+  links       Link[]
 }

@@ -1,36 +1,36 @@
 //import { ApolloServer, gql } from 'apollo-server'
-
 const { ApolloServer, gql } = require('apollo-server');
 //import { typeDefs } from 'schema.graphql'
+const { PrismaClient } = require("@prisma/client")
 
+const prisma = new PrismaClient()
 
-
-
-let links = [{
+/*let links = [{
     id: 'link-0',
     url: 'www.howtographql.com',
     description: 'Fullstack tutorial for GraphQL',
 }]
 
+let idCount = links.length*/
+
 //The resolvers object is the actual implementation of the GraphQL schema.
-
-let idCount = links.length
-
 const resolvers = {
     Query: {
         info: () => `This is the API of a Hackernews Clone`,
-        feed: () => links,
+        feed: () => async (parent, args, context) => {
+            return context.prisma.link.findMany()
+        },
     },
 
     Mutation: {
-        post: (parent, args) => {
-            const link = {
-                id: `link-${idCount++}`,
-                description: args.description,
-                url: args.url,
-            }
-            links.push(link)
-            return link
+        post: (parent, args, context, info) => {
+            const newLink = context.prisma.link.create({
+                data: {
+                    url: args.url,
+                    description: args.description,
+                },
+            })
+            return newLink
         }
     },
 
@@ -47,6 +47,8 @@ const resolvers = {
 const fs = require('fs')
 const path = require('path')
 
+
+
 const server = new ApolloServer({
     typeDefs: fs.readFileSync(
         path.join(__dirname, 'schema.graphql'), 
@@ -54,6 +56,9 @@ const server = new ApolloServer({
     ),
     //typeDefs,
     resolvers,
+    context: {
+        prisma,
+    }
 })
 
 server.listen().then(({ url }) => 
