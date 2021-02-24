@@ -46,6 +46,8 @@ const resolvers = {
 
 const fs = require('fs')
 const path = require('path')
+const { getUserId } = require('./utils');
+
 
 
 
@@ -56,8 +58,17 @@ const server = new ApolloServer({
     ),
     //typeDefs,
     resolvers,
-    context: {
-        prisma,
+
+    // creating the context as a function which returns the context
+    // advantage of begin able to attach the HTTP request that carries 
+    // the incoming GraphQL query (or mutation) to the context as well.
+    context: ({ req }) => {
+        return {
+            ...req,
+            prisma,
+            userId: 
+                req && req.headers.authorization ? getUserId(req) : null
+        }
     }
 })
 
