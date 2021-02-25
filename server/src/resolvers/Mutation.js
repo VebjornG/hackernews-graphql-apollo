@@ -1,10 +1,10 @@
-//const bcrypt = require('bcryptjs')
-//const jwt = require('jsonwebtoken')
-//const { APP_SECRET, getUserId } = require('../utils')
+const bcrypt = require('bcryptjs')
+const jwt = require('jsonwebtoken')
+const { APP_SECRET, getUserId } = require('../utils')
 
-import { bcrypt } from 'bcryptjs'
-import { jwt } from 'jsonwebtoken'
-import { APP_SECRET, getUserId } from '../utils'
+//import { bcrypt } from 'bcryptjs'
+//import { jwt } from 'jsonwebtoken'
+//import { APP_SECRET, getUserId } from '../utils'
 
 async function signup(parent, args, context, info) {
     // encrypt the User’s password using the bcryptjs library 
@@ -45,6 +45,18 @@ async function login(parent, args, context, info) {
         token,
         user,
     }
+}
+
+async function post(parent, args, context, info) {
+    const { userId } = context
+
+    return await context.prisma.link.create({
+        data: {
+            url: args.url,
+            description: args.description,
+            postedBy: { connect: { id: userId } },
+        }
+    })
 }
 
 module.exports = {

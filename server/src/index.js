@@ -2,8 +2,12 @@
 const { ApolloServer, gql } = require('apollo-server');
 //import { typeDefs } from 'schema.graphql'
 const { PrismaClient } = require("@prisma/client")
-
 const prisma = new PrismaClient()
+
+const Query = require('./resolvers/Query')
+const Mutation = require('./resolvers/Mutation')
+const User = require('./resolvers/User')
+const Link = require('./resolvers/Link')
 
 /*let links = [{
     id: 'link-0',
@@ -14,7 +18,7 @@ const prisma = new PrismaClient()
 let idCount = links.length*/
 
 //The resolvers object is the actual implementation of the GraphQL schema.
-const resolvers = {
+/*const resolvers = {
     Query: {
         info: () => `This is the API of a Hackernews Clone`,
         feed: () => async (parent, args, context) => {
@@ -39,7 +43,14 @@ const resolvers = {
         description: parent => parent.description,
         url: parent => parent.url,
     }
-}
+}*/
+
+const resolvers = {
+    Query,
+    Mutation,
+    User,
+    Link
+  }
 
 //Finally, the schema and resolvers are bundled and passed to ApolloServer which is imported from apollo-server. 
 //This tells the server what API operations are accepted and how they should be resolved.
@@ -62,6 +73,9 @@ const server = new ApolloServer({
     // creating the context as a function which returns the context
     // advantage of begin able to attach the HTTP request that carries 
     // the incoming GraphQL query (or mutation) to the context as well.
+    // This will allow the resolvers to read the Authorization header 
+    // and validate if the user who submitted the request is eligible 
+    // to perform the requested operation
     context: ({ req }) => {
         return {
             ...req,
