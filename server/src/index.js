@@ -8,6 +8,8 @@ const Query = require('./resolvers/Query')
 const Mutation = require('./resolvers/Mutation')
 const User = require('./resolvers/User')
 const Link = require('./resolvers/Link')
+const Subscription = require('./resolvers/Subscription')
+
 
 /*let links = [{
     id: 'link-0',
@@ -48,6 +50,7 @@ let idCount = links.length*/
 const resolvers = {
     Query,
     Mutation,
+    Subscription,
     User,
     Link
   }
@@ -58,9 +61,9 @@ const resolvers = {
 const fs = require('fs')
 const path = require('path')
 const { getUserId } = require('./utils');
+const { PubSub } = require('apollo-server')
 
-
-
+const pubsub = new PubSub()
 
 const server = new ApolloServer({
     typeDefs: fs.readFileSync(
@@ -70,8 +73,8 @@ const server = new ApolloServer({
     //typeDefs,
     resolvers,
 
-    // creating the context as a function which returns the context
-    // advantage of begin able to attach the HTTP request that carries 
+    // creating the context as a function which returns the context.
+    // Advantage of begin able to attach the HTTP request that carries 
     // the incoming GraphQL query (or mutation) to the context as well.
     // This will allow the resolvers to read the Authorization header 
     // and validate if the user who submitted the request is eligible 
@@ -80,8 +83,11 @@ const server = new ApolloServer({
         return {
             ...req,
             prisma,
+            pubsub,
             userId: 
-                req && req.headers.authorization ? getUserId(req) : null
+                req && req.headers.authorization 
+                    ? getUserId(req) 
+                    : null
         }
     }
 })
