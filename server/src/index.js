@@ -54,7 +54,8 @@ const resolvers = {
     Mutation,
     Subscription,
     User,
-    Link
+    Link,
+    Vote,
   }
 
 //Finally, the schema and resolvers are bundled and passed to ApolloServer which is imported from apollo-server. 
